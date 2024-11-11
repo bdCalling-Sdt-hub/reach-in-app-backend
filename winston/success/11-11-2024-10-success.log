@@ -1,0 +1,61 @@
+Mon Nov 11 2024 10:0:23 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:0:23 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:0:26 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:0:26 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:1:31 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:1:31 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:18:32 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:18:32 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:18:38 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:18:38 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:19:4 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:19:4 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:36:2 [REACH-IN] info: 192.168.10.102 - POST /api/v1/auth/login 200 - 216.643 ms
+Mon Nov 11 2024 10:47:31 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:47:31 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:47:42 [REACH-IN] info: 192.168.10.102 - POST /api/v1/admin 200 - 234.283 ms
+Mon Nov 11 2024 10:49:23 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:49:23 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:49:26 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:49:26 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:50:24 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:50:24 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:50:50 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:50:50 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:51:17 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:51:17 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:51:54 [REACH-IN] info: 192.168.10.102 - POST /api/v1/admin 200 - 262.682 ms
+Mon Nov 11 2024 10:52:23 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:52:23 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:52:24 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:52:24 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:52:24 [REACH-IN] info: [32m✔ Super admin created successfully![39m
+Mon Nov 11 2024 10:53:17 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:53:17 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:53:36 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:53:36 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:53:44 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:53:44 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:53:50 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:53:50 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:54:29 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:54:29 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:54:36 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:54:36 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:54:47 [REACH-IN] info: 192.168.10.102 - POST /api/v1/admin 200 - 219.995 ms
+Mon Nov 11 2024 10:58:18 [REACH-IN] info: 192.168.10.102 - GET /api/v1/admin 200 - 5.749 ms
+Mon Nov 11 2024 10:58:46 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:58:46 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:58:47 [REACH-IN] info: 192.168.10.102 - GET /api/v1/admin 200 - 9.031 ms
+Mon Nov 11 2024 10:58:50 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:58:50 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:58:52 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:58:52 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:58:52 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:58:53 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:58:58 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:58:58 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:59:11 [REACH-IN] info: [32m🚀 Database connected successfully[39m
+Mon Nov 11 2024 10:59:11 [REACH-IN] info: [33m♻️  Application listening on port:6001[39m
+Mon Nov 11 2024 10:59:12 [REACH-IN] info: 192.168.10.102 - GET /api/v1/admin 200 - 8.362 ms
+Mon Nov 11 2024 10:59:24 [REACH-IN] info: 192.168.10.102 - DELETE /api/v1/admin/67318e17fd1c245cb79d054a 200 - 6.133 ms

@@ -1,0 +1,6 @@
+node_modules
+/wiston
+uploads
+.env
+
+# dentist-push-notification.json

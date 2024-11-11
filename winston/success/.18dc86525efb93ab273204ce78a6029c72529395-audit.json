@@ -1,0 +1,45 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 1
+    },
+    "auditLog": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\.18dc86525efb93ab273204ce78a6029c72529395-audit.json",
+    "files": [
+        {
+            "date": 1731297514592,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-09-success.log",
+            "hash": "03787a10705d9c13654cf7febc102220aedf946cc39725be920b0318b79ab6b0"
+        },
+        {
+            "date": 1731297623324,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-10-success.log",
+            "hash": "e63894e06d6e105fdd2e6ac02932f6b02116e09c6c9a65c298ab9dcd959c105a"
+        },
+        {
+            "date": 1731301379837,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-11-success.log",
+            "hash": "f64fc2240169356dcc51b88c49a3cfb36bf0fdb08e69458ebae270b58a76a8e2"
+        },
+        {
+            "date": 1731311822220,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-13-success.log",
+            "hash": "38a137e58116c2816b549b4d6104db3e3938e5c374f49d577c8ab61100dcd39e"
+        },
+        {
+            "date": 1731312078545,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-14-success.log",
+            "hash": "9cf354f94182c3b1c70aea3768352f3bc99ce4d2728f446717158e71bef321de"
+        },
+        {
+            "date": 1731320989875,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-16-success.log",
+            "hash": "5d2d4df70088223c3da2d1cb2aba7babd01c156133a67cf60a5cd765eb4cc54c"
+        },
+        {
+            "date": 1731323001065,
+            "name": "D:\\bdCalling\\Backend\\reach-in-app-backend\\winston\\success\\11-11-2024-17-success.log",
+            "hash": "7562ea304abbe8e047ff0c6d8ed804b1f055c1cc76a975a362b79a183ccbf229"
+        }
+    ],
+    "hashType": "sha256"
+}
