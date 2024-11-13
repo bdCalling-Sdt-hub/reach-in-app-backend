@@ -29,6 +29,9 @@ const fileUploadHandler = () => {
                 case 'image':
                     uploadDir = path.join(baseUploadDir, 'images');
                 break;
+                case 'csv':
+                    uploadDir = path.join(baseUploadDir, 'csvs');
+                break;
                 default:
                     throw new ApiError(StatusCodes.BAD_REQUEST, 'File is not supported');
             }
@@ -64,13 +67,25 @@ const fileUploadHandler = () => {
             } else {
                 cb(new ApiError(StatusCodes.BAD_REQUEST, 'Only .jpeg, .png, .jpg file supported'))
             }
-        }else {
+        } else if (file.fieldname === 'csv') {
+            if (file.mimetype === 'text/csv') {
+                cb(null, true);
+            } else {
+                cb(new ApiError(StatusCodes.BAD_REQUEST, 'Only .csv file supported'))
+            }
+        }
+        else {
             cb(new ApiError(StatusCodes.BAD_REQUEST, 'This file is not supported'))
         }
     };
 
     const upload = multer({ storage: storage, fileFilter: filterFilter})
-    .fields([{ name: 'image', maxCount: 3 } ]);
+    .fields(
+        [
+            { name: 'image', maxCount: 3 }, 
+            { name: 'csv', maxCount: 1 }
+        ]
+    );
     return upload;
 
 };
