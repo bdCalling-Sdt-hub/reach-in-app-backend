@@ -38,8 +38,47 @@ const getAdmin = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.getUsersFromDB(req.query);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User Retrieved Successfully',
+    data: result
+  });
+  
+});
+
+const userSubscription = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.subscriptionDetailsFromDB(req.params.id );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User  Subscription Retrieved Successfully',
+    data: result.subscription
+  });
+
+});
+
+const blockUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.blockUserToDB(req.params.id );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Blocked This user Successfully',
+    data: result
+  });
+
+});
+
 export const AdminController = {
   deleteAdmin,
   createAdmin,
-  getAdmin
+  getAdmin,
+  getUser,
+  userSubscription,
+  blockUser
 };

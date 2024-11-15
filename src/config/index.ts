@@ -16,7 +16,8 @@ export default{
     },
     stripe:{
         stripeSecretKey:process.env.STRIPE_API_SECRET,
-        webhookSecret:process.env.WEBHOOK_SECRET
+        webhookSecret:process.env.WEBHOOK_SECRET,
+        paymentSuccess: process.env.STRIPE_PAYMENT_SUCCESS_LINK
     },
     email:{
         from: process.env.EMAIL_FROM,

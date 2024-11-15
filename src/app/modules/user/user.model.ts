@@ -45,9 +45,9 @@ const userSchema = new Schema<IUser, UserModal>(
             type: String,
             required: false,
         },
-        isSubscribe: {
-            type: String,
-            required: false,
+        isSubscribed: {
+            type: Boolean,
+            default: false
         },
         profile: {
             type: String,
@@ -56,6 +56,11 @@ const userSchema = new Schema<IUser, UserModal>(
         verified: {
             type: Boolean,
             default: false,
+        },
+        status: {
+            type: String,
+            enum: ["Active" , "Block"],
+            default: "Active",
         },
         authentication: {
             type: {
@@ -73,20 +78,6 @@ const userSchema = new Schema<IUser, UserModal>(
                 },
             },
             select: 0
-        },
-        accountInformation: {
-            status: {
-              type: Boolean
-            },
-            stripeAccountId: {
-                type: String
-            },
-            externalAccountId: {
-                type: String
-            },
-            currency: {
-                type: String
-            }
         }
     },
     {
@@ -106,12 +97,6 @@ userSchema.statics.isExistUserByEmail = async (email: string) => {
     return isExist;
 };
   
-//account check
-userSchema.statics.isAccountCreated = async (id: string) => {
-    const isUserExist:any = await User.findById(id);
-    return isUserExist.accountInformation.status;
-};
-  
 //is match password
 userSchema.statics.isMatchPassword = async ( password: string, hashPassword: string): Promise<boolean> => {
     return await bcrypt.compare(password, hashPassword);
@@ -125,13 +110,6 @@ userSchema.pre('save', async function (next) {
     const isExist = await User.findOne({ email: user.email });
     if (isExist) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Email already exist!');
-    }
-
-    // If the role is TEACHER, set accountInformation to default values if not already set
-    if (user.role === USER_ROLES.USER) {
-        user.accountInformation = {
-            status: false
-        };
     }
   
     //password hash

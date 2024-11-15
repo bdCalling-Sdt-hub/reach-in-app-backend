@@ -9,7 +9,7 @@ import { emailTemplate } from "../../../shared/emailTemplate";
 import { emailHelper } from "../../../helpers/emailHelper";
 import unlinkFile from "../../../shared/unlinkFile";
 
-const createUserToDB = async (payload: Partial<IUser>): Promise<IUser> => {
+const createUserToDB = async (payload: Partial<IUser>): Promise<IUser | null> => {
 
     // check email is exist or not
     const isExistEmail = await User.findOne({email: payload.email});
@@ -52,7 +52,7 @@ const createUserToDB = async (payload: Partial<IUser>): Promise<IUser> => {
         { $set: { authentication } }
     );
   
-    return createUser;
+    return null;
 };
 
 const getUserProfileFromDB = async (user: JwtPayload): Promise<Partial<IUser>> => {

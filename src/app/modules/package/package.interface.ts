@@ -4,8 +4,8 @@ export type IPackage = {
     title: String;
     description: String;
     price: Number;
-    duration: 'month' | 'year';
-    category: 'Monthly' | 'Yearly';
+    duration: '1 month' | '3 months' | '6 months' | '1 year'; 
+    paymentType: 'Monthly' | 'Yearly';
     productId: String;
     credit: Number;
     paymentLink: string;

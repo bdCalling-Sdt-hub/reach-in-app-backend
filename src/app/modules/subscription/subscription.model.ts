@@ -8,7 +8,7 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>(
             type: String,
             required: true
         },
-        priceAmount: {
+        price: {
             type: Number,
             required: true
         },
@@ -22,15 +22,11 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>(
             ref: "Package",
             required: true
         },
-        priceId: {
+        trxId: {
             type: String,
             required: true
         },
-        transactionId: {
-            type: String,
-            required: true
-        },
-        subscribeId: {
+        subscriptionId: {
             type: String,
             required: true
         },
@@ -40,6 +36,10 @@ const subscriptionSchema = new Schema<ISubscription, SubscriptionModel>(
         },
         currentPeriodEnd: {
             type: String,
+            required: true
+        },
+        remaining: {
+            type: Number,
             required: true
         },
         status: {

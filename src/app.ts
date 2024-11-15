@@ -5,12 +5,18 @@ import { Morgan } from "./shared/morgan";
 import router from '../src/app/routes';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 import cookieParser from "cookie-parser";
+import handleStripeWebhook from "./webhook/handleStripeWebhook";
 const app = express();
 
 // morgan
 app.use(Morgan.successHandler);
 app.use(Morgan.errorHandler);
-
+// Stripe webhook route
+app.use(
+    '/api/stripe/webhook',
+    express.raw({ type: 'application/json' }),
+    handleStripeWebhook
+);
 
 //body parser
 app.use(cors({
@@ -31,6 +37,8 @@ app.use('/api/v1', router);
 app.get("/", (req: Request, res: Response) => {
     res.send("Hey, How can I assist you");
 })
+
+
 
 //global error handle
 app.use(globalErrorHandler);

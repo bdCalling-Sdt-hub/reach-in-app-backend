@@ -2,9 +2,9 @@ import { StatusCodes } from 'http-status-codes';
 import Stripe from 'stripe';
 import ApiError from '../errors/ApiErrors';
 import stripe from '../config/stripe';
-const User:any = "";
-const Subscription:any = "";
-const PricingPlan:any = "";
+import { User } from '../app/modules/user/user.model';
+import { Package } from '../app/modules/package/package.model';
+import { Subscription } from '../app/modules/subscription/subscription.model';
 
 export const handleSubscriptionUpdated = async (data: Stripe.Subscription) => {
 
@@ -33,7 +33,7 @@ export const handleSubscriptionUpdated = async (data: Stripe.Subscription) => {
     
         if (existingUser) {
             // Find the pricing plan by priceId
-            const pricingPlan = await PricingPlan.findOne({ priceId });
+            const pricingPlan = await Package.findOne({ priceId });
     
             if (pricingPlan) {
                 // Find the current active subscription

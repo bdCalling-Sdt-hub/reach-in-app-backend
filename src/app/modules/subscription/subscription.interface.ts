@@ -2,12 +2,12 @@ import { Model, Types } from 'mongoose';
 
 export type ISubscription = {
     customerId: string;
-    priceAmount: number;
+    price: number;
     user: Types.ObjectId;
     package: Types.ObjectId;
-    priceId: string;
-    transactionId: string;
-    subscribeId: string;
+    trxId: string;
+    remaining: number;
+    subscriptionId: string;
     status: 'expired' | 'active' | 'cancel';
     currentPeriodStart: string;
     currentPeriodEnd: string;

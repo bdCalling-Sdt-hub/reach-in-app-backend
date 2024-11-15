@@ -9,13 +9,14 @@ import stripe from "../../../config/stripe";
 const createPackageToDB = async(payload: IPackage): Promise<IPackage | null>=>{
 
     const productPayload = {
-        name: payload.title,
+        title: payload.title,
         description: payload.description,
         duration: payload.duration,
-        price: payload.price,
+        price: Number(payload.price),
     }
 
-    const product = await createSubscriptionProduct(productPayload)
+    const product = await createSubscriptionProduct(productPayload);
+    
 
     if(!product){
         throw new ApiError(StatusCodes.BAD_REQUEST, "Failed to create subscription product")

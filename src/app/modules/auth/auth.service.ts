@@ -30,6 +30,11 @@ const loginUserFromDB = async (payload: ILoginData) => {
     if (!isExistUser.verified) {
         throw new ApiError(StatusCodes.BAD_REQUEST, 'Please verify your account, then try to login again');
     }
+    
+    //check verified and status
+    if (isExistUser.status === "Block") {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Your Account is temporary Blocked By Admin. Please Try again later');
+    }
   
     //check match password
     if ( password && !(await User.isMatchPassword(password, isExistUser.password))) {
@@ -60,6 +65,12 @@ const forgetPasswordToDB = async (email: string) => {
     if (!isExistUser) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
     }
+
+    //check verified and status
+    if (isExistUser.status === "Block") {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Your Account is temporary Blocked By Admin. Please Try again later');
+    }
+  
   
     //send mail
     const otp = generateOTP();

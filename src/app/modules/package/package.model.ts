@@ -17,12 +17,12 @@ const packageSchema = new Schema<IPackage, PackageModel>(
         },
         duration: {
             type: String,
-            enum: ["month", "year"],
+            enum: ['1 month' , '3 months' , '6 months' , '1 year'],
             required: true
         },
-        category: {
+        paymentType: {
             type: String,
-            category: ['Monthly', 'Yearly'],
+            enum: ['Monthly' , 'Yearly'],
             required: true
         },
         productId: {
