@@ -23,6 +23,18 @@ router.get(
   AdminController.getUser
 );
 
+router.get(
+  '/user-statistic',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  AdminController.userStatistic
+);
+
+router.get(
+  '/subscription-statistic',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  AdminController.subscriptionStatistic
+);
+
 router.route("/:id")
   .patch(
     auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),

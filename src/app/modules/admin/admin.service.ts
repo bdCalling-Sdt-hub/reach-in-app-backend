@@ -121,6 +121,80 @@ const blockUserToDB = async (id: string): Promise<IUser | null> => {
   return subscription;
 };
 
+const userStatisticFromDB = async (id: string) => {
+
+ 
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const startDate = new Date(currentYear, 0, 1);
+  const endDate = new Date(currentYear + 1, 0, 1);
+
+  const months = Array.from({ length: 12 }, (_, i) => ({
+    month: new Date(0, i).toLocaleString('en-US', { month: 'long' }).slice(0, 3),
+    user: 0
+  }));
+
+  const monthlyEarnings = await Subscription.aggregate([
+    { $match: { createdAt: { $gte: startDate, $lt: endDate } } },
+    {
+      $group: {
+        _id: {
+          year: { $year: '$createdAt' },
+          month: { $month: '$createdAt' },
+        },
+        user: { $sum: '$price' },
+      },
+    }
+
+  ]);
+
+  monthlyEarnings.forEach((income: any) => {
+    const monthIndex = income._id.month - 1;
+    months[monthIndex].user = income.user;
+  });
+
+
+  return months;
+}
+
+const subscriptionStatisticFromDB = async (): Promise<ISubscription> => {
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const startDate = new Date(currentYear, 0, 1);
+  const endDate = new Date(currentYear + 1, 0, 1);
+
+  const months: any = Array.from({ length: 12 }, (_, i) => ({
+    month: new Date(0, i).toLocaleString('en-US', { month: 'long' }).slice(0, 3),
+    subscription: 0
+  }));
+
+  const monthlyEarnings = await Subscription.aggregate([
+    { $match: { createdAt: { $gte: startDate, $lt: endDate } } },
+    {
+      $group: {
+        _id: {
+          year: { $year: '$createdAt' },
+          month: { $month: '$createdAt' },
+        },
+        subscription: { $sum: '$price' },
+      },
+    }
+
+  ]);
+
+  monthlyEarnings.forEach((income: any) => {
+    const monthIndex = income._id.month - 1;
+    months[monthIndex].subscription = income.subscription;
+  });
+
+
+  return months;
+
+}
+
+
 
 
 export const AdminService = {
@@ -129,5 +203,7 @@ export const AdminService = {
   getAdminFromDB,
   getUsersFromDB,
   subscriptionDetailsFromDB,
-  blockUserToDB
+  blockUserToDB,
+  userStatisticFromDB,
+  subscriptionStatisticFromDB
 };

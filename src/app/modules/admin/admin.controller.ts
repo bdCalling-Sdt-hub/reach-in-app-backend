@@ -74,11 +74,37 @@ const blockUser = catchAsync(async (req: Request, res: Response) => {
 
 });
 
+const userStatistic = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.userStatisticFromDB(req.params.id );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User Statistic Retrieved Successfully',
+    data: result
+  });
+
+});
+
+const subscriptionStatistic = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.subscriptionStatisticFromDB();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Subscription Statistic Retrieved Successfully',
+    data: result
+  });
+
+});
+
 export const AdminController = {
   deleteAdmin,
   createAdmin,
   getAdmin,
   getUser,
   userSubscription,
-  blockUser
+  blockUser,
+  userStatistic,
+  subscriptionStatistic
 };
