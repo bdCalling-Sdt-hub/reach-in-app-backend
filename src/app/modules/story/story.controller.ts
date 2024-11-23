@@ -25,7 +25,7 @@ const updateStory = catchAsync(async (req: Request, res: Response) => {
 });
 
 const getStory = catchAsync(async (req: Request, res: Response) => {
-    const result = await StoryService.getStoryFromDB();
+    const result = await StoryService.getStoryFromDB(req.query);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
@@ -45,9 +45,20 @@ const deleteStory = catchAsync(async (req: Request, res: Response) => {
     })
 });
 
+const storyDetails = catchAsync(async (req: Request, res: Response) => {
+    const result = await StoryService.storyDetailsFromDB(req.params.id);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "Story Details Retrieved Successfully",
+        data: result
+    })
+});
+
 export const StoryController = {
     createStory,
     updateStory,
     getStory,
-    deleteStory
+    deleteStory,
+    storyDetails
 }

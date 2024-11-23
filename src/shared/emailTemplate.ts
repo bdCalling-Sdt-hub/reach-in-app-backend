@@ -9,18 +9,18 @@ const createAccount = (values: ICreateAccount) => {
                 <div style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
     
                     <!-- Logo -->
-                    <img src="https://res.cloudinary.com/ddqovbzxy/image/upload/v1731324031/reach-in_seby85.jpg" alt="Servi Logo" style="display: block; margin: 0 auto 20px; width:150px" />
+                    <img src="https://res.cloudinary.com/ddqovbzxy/image/upload/v1731324031/reach-in_seby85.jpg" alt="Reach-in-Asia Logo" style="display: block; margin: 0 auto 20px; width:150px" />
 
                     <!-- Greeting -->
                     <h2 style="color: #2375D0; font-size: 24px; margin-bottom: 20px;">Hey, ${values.name}!</h2>
 
                     <!-- Verification Instructions -->
-                    <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Thank you for signing up for Servi. Please verify your email address to activate your account.</p>
+                    <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Thank you for signing up for Reach-in-Asia. Please verify your email address to activate your account.</p>
 
                     <!-- OTP Section -->
                     <div style="text-align: center;">
                         <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Your single use code is:</p>
-                        <div style="background-color: #2375D0; width: 80px; padding: 10px; text-align: center; border-radius: 8px; color: #fff; font-size: 25px; letter-spacing: 2px; margin: 20px auto;">${values.otp}</div>
+                        <div style="background-color: #2375D0; width: 100px; padding: 10px; text-align: center; border-radius: 8px; color: #fff; font-size: 25px; letter-spacing: 2px; margin: 20px auto;">${values.otp}</div>
                         <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">This code is valid for 3 minutes.</p>
                     </div>
 
@@ -47,7 +47,7 @@ const resetPassword = (values: IResetPassword) => {
                     <img src="https://res.cloudinary.com/ddqovbzxy/image/upload/v1731324031/reach-in_seby85.jpg" alt="Logo" style="display: block; margin: 0 auto 20px; width:150px" />
                     <div style="text-align: center;">
                         <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">Your single use code is:</p>
-                        <div style="background-color: #2375D0; width: 80px; padding: 10px; text-align: center; border-radius: 8px; color: #fff; font-size: 25px; letter-spacing: 2px; margin: 20px auto;">${values.otp}</div>
+                        <div style="background-color: #2375D0; width: 100px; padding: 10px; text-align: center; border-radius: 8px; color: #fff; font-size: 25px; letter-spacing: 2px; margin: 20px auto;">${values.otp}</div>
                         <p style="color: #555; font-size: 16px; line-height: 1.5; margin-bottom: 20px;">This code is valid for 3 minutes.</p>
                     </div>
                 </div>

@@ -8,6 +8,8 @@ import { AdminRoutes } from '../modules/admin/admin.routes';
 import { BlogRoutes } from '../modules/blog/blog.route';
 import { StoryRoutes } from '../modules/story/story.routes';
 import { SubscriptionRoutes } from '../modules/subscription/subscription.routes';
+import { NotificationRoutes } from '../modules/notification/notification.routes';
+import { ContactRoutes } from '../modules/contact/contact.routes';
 const router = express.Router();
 
 const apiRoutes = [
@@ -20,6 +22,8 @@ const apiRoutes = [
     { path: "/blog", route: BlogRoutes },
     { path: "/story", route: StoryRoutes },
     { path: "/subscription", route: SubscriptionRoutes },
+    { path: "/notification", route: NotificationRoutes },
+    { path: "/contact", route: ContactRoutes },
 ]
 
 apiRoutes.forEach(route => router.use(route.path, route.route));

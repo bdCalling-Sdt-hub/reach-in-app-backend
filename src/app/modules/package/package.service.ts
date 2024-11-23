@@ -56,13 +56,41 @@ const updatePackageToDB = async(id: string, payload: IPackage): Promise<IPackage
 }
 
 
-const getPackageFromDB = async(): Promise<IPackage[]>=>{
-    const result = await Package.find();
+const getPackageFromDB = async(paymentType: string): Promise<IPackage[]>=>{
+    const query:any = {
+        status: "Active"
+    }
+    if(paymentType){
+        query.paymentType = paymentType
+    }
+
+    const result = await Package.find(query);
     return result;
 }
 
 const getPackageDetailsFromDB = async(id: string): Promise<IPackage | null>=>{
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID")
+    }
     const result = await Package.findById(id);
+    return result;
+}
+
+const deletePackageToDB = async(id: string): Promise<IPackage | null>=>{
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID")
+    }
+
+    const result = await Package.findByIdAndUpdate(
+        {_id: id},
+        {status: "Delete"},
+        {new: true}
+    );
+
+    if(!result){
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Failed to deleted Package")
+    }
+
     return result;
 }
 
@@ -70,5 +98,6 @@ export const PackageService = {
     createPackageToDB,
     updatePackageToDB,
     getPackageFromDB,
-    getPackageDetailsFromDB
+    getPackageDetailsFromDB,
+    deletePackageToDB
 }

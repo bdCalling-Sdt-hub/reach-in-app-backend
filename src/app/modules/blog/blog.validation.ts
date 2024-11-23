@@ -3,11 +3,11 @@ import { Category } from './blog.interface';
 
 const createBlogZodSchema = z.object({
     body: z.object({
-        subject: z.string().min(1, { message: 'Question is required' }),
-        image: z.string().min(1, { message: 'Image is required' }),
-        category: z.enum([Category.Privacy, Category.Sales, Category.Marketing, Category.HR]),
-        url: z.string().min(1, {message: "Url is required"}),
-        details: z.string().min(1, {message: "Details is required"}),
+        subject: z.string({required_error: "Question is required"}),
+        image: z.string({required_error :"Image is required"}),
+        category: z.nativeEnum(Category, { required_error: "Category is required" }),
+        url: z.string(({required_error :"URL is required"})),
+        details: z.string(({required_error :"Description is required"}))
     })
 });
 

@@ -54,35 +54,9 @@ const getTermsAndCondition = catchAsync(async (req: Request, res: Response) => {
     })
 })
 
-//about
-const createAbout = catchAsync(async (req: Request, res: Response) => {
-    const { ...aboutData } = req.body
-    const result = await RuleService.createAboutToDB(aboutData)
-  
-    sendResponse(res, {
-        success: true,
-        statusCode: StatusCodes.OK,
-        message: result.message,
-        data: result.result
-    })
-})
-  
-const getAbout = catchAsync(async (req: Request, res: Response) => {
-    const result = await RuleService.getAboutFromDB()
-  
-    sendResponse(res, {
-        success: true,
-        statusCode: StatusCodes.OK,
-        message: 'About retrieved successfully',
-        data: result
-    })
-})
-
 export const RuleController = {
     createPrivacyPolicy,
     getPrivacyPolicy,
     createTermsAndCondition,
-    getTermsAndCondition,
-    createAbout,
-    getAbout
+    getTermsAndCondition
 }  

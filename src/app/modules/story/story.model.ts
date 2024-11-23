@@ -14,6 +14,10 @@ const storySchema = new Schema<IStory, StoryModel>(
         answer: {
             type: String,
             required: true
+        },
+        image: {
+            type: String,
+            required: true
         }
     },
     {timestamps: true}

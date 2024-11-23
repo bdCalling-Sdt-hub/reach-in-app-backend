@@ -29,6 +29,18 @@ router.get(
   AdminController.userStatistic
 );
 
+router.patch(
+  '/block',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  AdminController.blockBulkUser
+);
+
+router.patch(
+  '/active',
+  auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
+  AdminController.activeBulkUser
+);
+
 router.get(
   '/subscription-statistic',
   auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),

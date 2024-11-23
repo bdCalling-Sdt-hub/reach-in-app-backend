@@ -27,7 +27,7 @@ const updatePackage = catchAsync(async(req: Request, res: Response)=>{
 })
 
 const getPackage = catchAsync(async(req: Request, res: Response)=>{
-    const result = await PackageService.getPackageFromDB();
+    const result = await PackageService.getPackageFromDB(req.query.paymentType as string);
 
     sendResponse(res, {
         statusCode: StatusCodes.OK,
@@ -48,9 +48,22 @@ const packageDetails = catchAsync(async(req: Request, res: Response)=>{
     })
 })
 
+
+const deletePackage = catchAsync(async(req: Request, res: Response)=>{
+    const result = await PackageService.deletePackageToDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "Package Deleted Successfully",
+        data: result
+    })
+})
+
 export const PackageController = {
     createPackage,
     updatePackage,
     getPackage,
-    packageDetails
+    packageDetails,
+    deletePackage
 }

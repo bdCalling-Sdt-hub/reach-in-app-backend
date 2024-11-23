@@ -16,8 +16,8 @@ const createAdmin = catchAsync(async (req: Request, res: Response) => {
 });
 
 const deleteAdmin = catchAsync(async (req: Request, res: Response) => {
-  const payload = req.params.id;
-  const result = await AdminService.deleteAdminFromDB(payload);
+  
+  const result = await AdminService.deleteAdminFromDB(req.params.id);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -68,8 +68,7 @@ const blockUser = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Blocked This user Successfully',
-    data: result
+    message: result
   });
 
 });
@@ -98,6 +97,30 @@ const subscriptionStatistic = catchAsync(async (req: Request, res: Response) => 
 
 });
 
+const blockBulkUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.blockBulkUserToDB(req.body.ids);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Block All User Successfully',
+    data: result
+  });
+
+});
+
+const activeBulkUser = catchAsync(async (req: Request, res: Response) => {
+  const result = await AdminService.activeBulkUserToDB(req.body.ids);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Active All User Successfully',
+    data: result
+  });
+
+});
+
 export const AdminController = {
   deleteAdmin,
   createAdmin,
@@ -106,5 +129,7 @@ export const AdminController = {
   userSubscription,
   blockUser,
   userStatistic,
-  subscriptionStatistic
+  subscriptionStatistic,
+  blockBulkUser,
+  activeBulkUser
 };

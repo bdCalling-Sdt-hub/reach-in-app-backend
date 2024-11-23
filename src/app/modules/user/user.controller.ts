@@ -29,6 +29,17 @@ const getUserProfile = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const companyProfile = catchAsync(async (req: Request, res: Response) => {
+    const result = await UserService.companyDetailsFromDB(req.params.id);
+
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: 'Company retrieved successfully',
+        data: result
+    });
+});
+
 //update profile
 const updateProfile = catchAsync( async (req: Request, res: Response, next: NextFunction) => {
     const user = req.user;
@@ -42,6 +53,7 @@ const updateProfile = catchAsync( async (req: Request, res: Response, next: Next
         profile,
         ...req.body,
     };
+    
     const result = await UserService.updateProfileToDB(user, data);
 
     sendResponse(res, {
@@ -55,5 +67,6 @@ const updateProfile = catchAsync( async (req: Request, res: Response, next: Next
 export const UserController = { 
     createUser,
     getUserProfile, 
-    updateProfile
+    updateProfile,
+    companyProfile
 };

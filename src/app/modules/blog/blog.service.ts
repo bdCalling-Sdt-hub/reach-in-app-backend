@@ -15,9 +15,43 @@ const createBlogToDB = async (payload: IBlog): Promise<IBlog> => {
   return faq;
 };
 
-const faqsFromDB = async (): Promise<IBlog[]> => {
-  const faqs = await Blog.find().select("details url category image subject");
-  return faqs;
+const blogDetailsFromDB = async (id: string): Promise<IBlog | null> => {
+  if(!mongoose.Types.ObjectId.isValid(id)){
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID");
+  }
+
+  const faq = await Blog.findById(id);
+  return faq;
+};
+
+const faqsFromDB = async (query: Record<string, unknown>): Promise<IBlog[]> => {
+
+  const { category, page, limit } = query;
+
+  const queries: any = {};
+  if (category) {
+    queries.category = category;
+  }
+
+  const pages = parseInt(page as string) || 1;
+  const size = parseInt(limit as string) || 10;
+  const skip = (pages - 1) * size;
+
+  const blogs = await Blog.find(queries)
+    .select("details url category image subject createdAt")
+    .skip(skip)
+    .limit(size);
+
+    const count = await Blog.countDocuments(queries);
+
+    const data: any = {
+      blogs,
+      meta: {
+        page: pages,
+        total: count
+      }
+    }
+  return data;
 };
 
 const deleteBlogToDB = async (id: string): Promise<IBlog | undefined> => {
@@ -69,4 +103,5 @@ export const BlogService = {
   updateBlogToDB,
   faqsFromDB,
   deleteBlogToDB,
+  blogDetailsFromDB
 };  

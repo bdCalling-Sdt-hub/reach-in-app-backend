@@ -3,7 +3,6 @@ import ApiError from '../../../errors/ApiErrors'
 import { ICategory } from './category.interface'
 import { Category } from './category.model'
 import unlinkFile from '../../../shared/unlinkFile'
-import { Bookmark } from '../bookmark/bookmark.model'
 
 const createCategoryToDB = async (payload: ICategory) => {
   const {name, image} = payload;

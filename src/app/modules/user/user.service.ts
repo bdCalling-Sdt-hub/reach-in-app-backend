@@ -8,6 +8,7 @@ import generateOTP from "../../../util/generateOTP";
 import { emailTemplate } from "../../../shared/emailTemplate";
 import { emailHelper } from "../../../helpers/emailHelper";
 import unlinkFile from "../../../shared/unlinkFile";
+import { sendNotifications } from "../../../helpers/notificationsHelper";
 
 const createUserToDB = async (payload: Partial<IUser>): Promise<IUser | null> => {
 
@@ -47,16 +48,30 @@ const createUserToDB = async (payload: Partial<IUser>): Promise<IUser | null> =>
         expireAt: new Date(Date.now() + 3 * 60000),
     };
 
-    await User.findOneAndUpdate(
+    const newUser =await User.findOneAndUpdate(
         { _id: createUser._id },
         { $set: { authentication } }
     );
+
+    const notifications = {
+        text: `${newUser?.company} has arrived`,
+        link: `/registered-users?id=${newUser?._id}`
+    }
+    sendNotifications(notifications);
   
     return null;
 };
 
 const getUserProfileFromDB = async (user: JwtPayload): Promise<Partial<IUser>> => {
     const { id } = user;
+    const isExistUser:any = await User.isExistUserById(id);
+    if (!isExistUser) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
+    }
+    return isExistUser;
+};
+
+const companyDetailsFromDB = async (id: string): Promise<Partial<IUser>> => {
     const isExistUser:any = await User.isExistUserById(id);
     if (!isExistUser) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "User doesn't exist!");
@@ -87,5 +102,6 @@ const updateProfileToDB = async ( user: JwtPayload, payload: Partial<IUser>): Pr
 export const UserService = {
     createUserToDB,
     getUserProfileFromDB,
-    updateProfileToDB
+    updateProfileToDB,
+    companyDetailsFromDB
 };

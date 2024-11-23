@@ -6,6 +6,7 @@ import { User } from '../app/modules/user/user.model';
 import { Package } from '../app/modules/package/package.model';
 import { Subscription } from '../app/modules/subscription/subscription.model';
 import { ObjectId } from 'mongoose';
+import { sendNotifications } from '../helpers/notificationsHelper';
 
 // Helper function to find and validate user
 const getUserByEmail = async (email: string) => {
@@ -38,6 +39,8 @@ const createNewSubscription = async (
     remaining:number
 
 ) => {
+
+
     const isExistSubscription = await Subscription.findOne({ user: user });
 
     if (isExistSubscription) {
@@ -68,7 +71,8 @@ const createNewSubscription = async (
             subscriptionId,
             status: 'active',
             currentPeriodStart,
-            currentPeriodEnd
+            currentPeriodEnd,
+            remaining
         });
         await newSubscription.save();
     }
@@ -111,6 +115,12 @@ export const handleSubscriptionCreated = async (data: Stripe.Subscription) => {
             { isSubscribed: true },
             { new: true }
         );
+
+        const notifications = {
+            text: `${user?.company} has arrived`,
+            link: `/subscription-earning?id=${user?._id}`
+        }
+        sendNotifications(notifications);
 
     } catch (error) {
         console.error('Error handling subscription creation:', error);

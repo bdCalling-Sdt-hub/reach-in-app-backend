@@ -36,7 +36,7 @@ const deleteBlog = catchAsync(async (req: Request, res: Response) => {
 });
   
 const getBlogs = catchAsync(async (req: Request, res: Response) => {
-    const result = await BlogService.faqsFromDB();
+    const result = await BlogService.faqsFromDB(req.query);
   
     sendResponse(res, {
       statusCode: 200,
@@ -46,9 +46,21 @@ const getBlogs = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const blogDetails = catchAsync(async (req: Request, res: Response) => {
+    const result = await BlogService.blogDetailsFromDB(req.params.id);
+  
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: 'Blog Details retrieved Successfully',
+      data: result,
+    });
+});
+
 export const BlogController = {
     createBlog,
     updateBlog,
     deleteBlog,
-    getBlogs
+    getBlogs,
+    blogDetails
 };  

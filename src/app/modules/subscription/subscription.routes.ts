@@ -12,6 +12,11 @@ router.get("/",
 router.get("/details", 
     auth(USER_ROLES.USER), 
     SubscriptionController.subscriptionDetails
+);
+
+router.get("/:id", 
+    auth(USER_ROLES.USER), 
+    SubscriptionController.companySubscriptionDetails
 )
 
 export const SubscriptionRoutes = router;

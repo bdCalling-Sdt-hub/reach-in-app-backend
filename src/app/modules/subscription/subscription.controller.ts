@@ -27,8 +27,20 @@ const subscriptionDetails = catchAsync( async(req: Request, res: Response)=>{
     })
 });
 
+const companySubscriptionDetails= catchAsync( async(req: Request, res: Response)=>{
+    const result = await SubscriptionService.companySubscriptionDetailsFromDB(req.params.id);
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "Company Subscription Details Retrieved Successfully",
+        data: result.subscription
+    })
+});
+
 
 export const SubscriptionController = {
     subscriptions,
-    subscriptionDetails
+    subscriptionDetails,
+    companySubscriptionDetails
 }

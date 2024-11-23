@@ -26,6 +26,27 @@ const subscriptionDetailsFromDB = async (user: JwtPayload): Promise<{ subscripti
     return { subscription };
 };
 
+const companySubscriptionDetailsFromDB = async (id: string): Promise<{ subscription: ISubscription | {} }> => {
+
+    const subscription = await Subscription.findOne({ user: id }).populate("package", "title credit").lean();
+    if (!subscription) {
+        return { subscription: {} }; // Return empty object if no subscription found
+    }
+
+    const subscriptionFromStripe = await stripe.subscriptions.retrieve(subscription.subscriptionId);
+
+    // Check subscription status and update database accordingly
+    if (subscriptionFromStripe?.status !== "active") {
+        await Promise.all([
+            User.findByIdAndUpdate(id, { isSubscribed: false }, { new: true }),
+            Subscription.findOneAndUpdate({ user: id }, { status: "expired" }, { new: true }),
+        ]);
+    }
+
+    return { subscription };
+};
+
+
 
 const subscriptionsFromDB = async (query: Record<string, unknown>): Promise<ISubscription[]> => {
     const anyConditions: any[] = [];
@@ -63,11 +84,11 @@ const subscriptionsFromDB = async (query: Record<string, unknown>): Promise<ISub
     const result = await Subscription.find(whereConditions).populate([
         {
             path: "package",
-            select: "title paymentType"
+            select: "title paymentType credit description"
         },
         {
             path: "user",
-            select: "email name"
+            select: "email name linkedIn contact company website "
         },
     ])
         .select("user package price trxId currentPeriodStart currentPeriodEnd status")
@@ -89,5 +110,6 @@ const subscriptionsFromDB = async (query: Record<string, unknown>): Promise<ISub
 
 export const SubscriptionService = {
     subscriptionDetailsFromDB,
-    subscriptionsFromDB
+    subscriptionsFromDB,
+    companySubscriptionDetailsFromDB
 }

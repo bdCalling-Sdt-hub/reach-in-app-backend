@@ -23,14 +23,14 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
     const result = await AuthService.loginUserFromDB(loginData);
 
     res.cookie('accessToken', result.accessToken, {
-        httpOnly: true, // Prevents access via JavaScript
+        httpOnly: false, // Prevents access via JavaScript
         secure: config.node_env !== 'development', // Ensures the cookie is sent only over HTTPS
         sameSite: 'strict', // Mitigates CSRF attacks
         maxAge: 3600000 // Cookie expiration time in milliseconds (1 hour)
     });
 
     res.cookie('refreshToken', result.refreshToken, {
-        httpOnly: true, // Prevents access via JavaScript
+        httpOnly: false, // Prevents access via JavaScript
         secure: config.node_env !== 'development', // Ensures the cookie is sent only over HTTPS
         sameSite: 'strict', // Mitigates CSRF attacks
         maxAge: 1000 * 60 * 60 * 24 * 30 // Cookie expiration time in milliseconds (1 hour)

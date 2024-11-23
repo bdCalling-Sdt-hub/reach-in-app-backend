@@ -35,6 +35,9 @@ router
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
         BlogController.deleteBlog
     )
+    .get(
+        BlogController.blogDetails
+    )
     .patch(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.ADMIN),
         fileUploadHandler(),
