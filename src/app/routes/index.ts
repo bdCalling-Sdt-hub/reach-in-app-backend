@@ -10,6 +10,8 @@ import { StoryRoutes } from '../modules/story/story.routes';
 import { SubscriptionRoutes } from '../modules/subscription/subscription.routes';
 import { NotificationRoutes } from '../modules/notification/notification.routes';
 import { ContactRoutes } from '../modules/contact/contact.routes';
+import { CompanyRoutes } from '../modules/company/company.routes';
+import { PeopleRoutes } from '../modules/people/people.routes';
 const router = express.Router();
 
 const apiRoutes = [
@@ -24,6 +26,8 @@ const apiRoutes = [
     { path: "/subscription", route: SubscriptionRoutes },
     { path: "/notification", route: NotificationRoutes },
     { path: "/contact", route: ContactRoutes },
+    { path: "/company", route: CompanyRoutes },
+    { path: "/people", route: PeopleRoutes },
 ]
 
 apiRoutes.forEach(route => router.use(route.path, route.route));

@@ -16,7 +16,7 @@ const createPeople = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const createBulkPeople = catchAsync(async(req:Request, res: Response)=>{
-    const result = await PeopleService.createBulkPeopleToDB(req.body);
+    const result = await PeopleService.createBulkPeopleToDB(req.body?.people);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
@@ -26,7 +26,17 @@ const createBulkPeople = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const getPeople = catchAsync(async(req:Request, res: Response)=>{
-    const result = await PeopleService.getPeopleFromDB();
+    const result = await PeopleService.getPeopleFromDB(req.query);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "People Retrieved Successfully", 
+        data: result
+    })
+});
+
+const peopleDetails = catchAsync(async(req:Request, res: Response)=>{
+    const result = await PeopleService.peopleDetailsFromDB(req.params.id);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
@@ -87,5 +97,6 @@ export const PeopleController = {
     updateBulkPeople,
     updateSinglePeople,
     deleteSinglePeople,
-    deleteBulkPeople
+    deleteBulkPeople,
+    peopleDetails
 }

@@ -35,6 +35,16 @@ const getCompany = catchAsync(async(req:Request, res: Response)=>{
     })
 });
 
+const companyDetails = catchAsync(async(req:Request, res: Response)=>{
+    const result = await CompanyService.companyDetailsFromDB(req.params.id);
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: "Company Retrieved Successfully", 
+        data: result
+    })
+});
+
 // update bulk people information
 const updateBulkCompany = catchAsync(async(req:Request, res: Response)=>{
     const result = await CompanyService.updateBulkCompanyToDB(req.body);
@@ -87,5 +97,6 @@ export const CompanyController = {
     updateBulkCompany,
     updateSingleCompany,
     deleteSingleCompany,
-    deleteBulkCompany
+    deleteBulkCompany,
+    companyDetails
 }

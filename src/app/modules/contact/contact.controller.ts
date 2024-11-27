@@ -38,7 +38,7 @@ const deleteContact = catchAsync(async(req: Request, res: Response)=>{
 })
 
 const bulkContactDelete = catchAsync(async(req: Request, res: Response)=>{
-    const result = await ContactService.bulkContactDeleteToDB(req.body.ids);
+    const result = await ContactService.bulkContactDeleteToDB(req.body);
 
     sendResponse(res, {
         statusCode: StatusCodes.OK,

@@ -13,23 +13,21 @@ router.route("/")
     .post(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         fileUploadHandler(),
+        (req: Request, res: Response, next: NextFunction) => {
+            const payload = req.body;
+            let image;
+            if (req.files && 'image' in req.files && req.files.image[0]) {
+                image = `/images/${req.files.image[0].filename}`;
+            }
+
+            req.body = {...payload, image};
+            next();
+        },
         validateRequest(PeopleValidation.createPeopleZodSchema),
         PeopleController.createPeople
     )
     .get(
         PeopleController.getPeople
-    );
-
-router.route("/:id")
-    .delete(
-        auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
-        PeopleController.deleteSinglePeople
-    )
-    .patch(
-        auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
-        fileUploadHandler(),
-        validateRequest(PeopleValidation.updatePeopleZodSchema),
-        PeopleController.updateSinglePeople
     );
 
 router.route("/bulk")
@@ -48,7 +46,6 @@ router.route("/bulk")
                 } else {
                     return res.status(400).json({ message: "CSV file is required." });
                 }
-
                 req.body = { people };
                 next();
 
@@ -69,5 +66,36 @@ router.route("/bulk")
         validateRequest(PeopleValidation.updatePeopleZodSchema),
         PeopleController.updateBulkPeople
     );
+
+
+router.route("/:id")
+    .delete(
+        auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
+        PeopleController.deleteSinglePeople
+    )
+    .get(
+        PeopleController.peopleDetails
+    )
+    .patch(
+        auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
+        fileUploadHandler(),
+        (req: Request, res: Response, next: NextFunction) => {
+            const payload = req.body;
+
+            let image;
+            if (req.files && 'image' in req.files && req.files.image[0]) {
+                image = `/images/${req.files.image[0].filename}`;
+            }
+
+            console.log(image)
+
+            req.body = {...payload, image};
+            next();
+        },
+        validateRequest(PeopleValidation.updatePeopleZodSchema),
+        PeopleController.updateSinglePeople
+    );
+
+
 
 export const PeopleRoutes = router;

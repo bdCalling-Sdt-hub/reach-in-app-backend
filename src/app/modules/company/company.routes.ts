@@ -25,6 +25,9 @@ router.route("/:id")
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         CompanyController.deleteSingleCompany
     )
+    .get(
+        CompanyController.companyDetails
+    )
     .patch(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         fileUploadHandler(),

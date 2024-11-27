@@ -43,6 +43,29 @@ const loginUser = catchAsync(async (req: Request, res: Response) => {
         data: result
     });
 });
+
+const logoutUser = catchAsync(async (req: Request, res: Response) => {
+
+    res.cookie('accessToken', "", {
+        httpOnly: false,
+        secure: config.node_env !== 'development',
+        sameSite: 'strict',
+        maxAge: 0
+    });
+
+    res.cookie('refreshToken', "", {
+        httpOnly: false,
+        secure: config.node_env !== 'development',
+        sameSite: 'strict',
+        maxAge: 0
+    });
+  
+    sendResponse(res, {
+        success: true,
+        statusCode: StatusCodes.OK,
+        message: 'Logout Successfully'
+    });
+});
   
 const forgetPassword = catchAsync(async (req: Request, res: Response) => {
     const email = req.body.email;
@@ -113,5 +136,6 @@ export const AuthController = {
     resetPassword,
     changePassword,
     newAccessToken,
-    resendVerificationEmail
+    resendVerificationEmail,
+    logoutUser
 };

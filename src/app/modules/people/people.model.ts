@@ -1,47 +1,40 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";// Adjust the path accordingly
 import { IPeople, PeopleModel } from "./people.interface";
 
+// Define the schema for IPeople
 const PeopleSchema = new Schema<IPeople, PeopleModel>(
     {
-        personal: {
-            contact_name: { type: String, required: true },
-            title: { type: String, required: true },
-            address: { type: String, required: true },
-            email: { type: String, required: true },
-            hq_phone: { type: String, default: null },
-            line: { type: String, default: null },
-            mobile_number: { type: String, default: null },
-            website: { type: String, default: null },
+        name: { type: String, required: true },
+        location: { type: String, required: true },
+        hqLocation: { type: String, required: true },
+        designation: { type: String, required: true },
+        companyName: { type: String, required: true },
+        instagram: { type: String, required: false },
+        facebook: { type: String, required: false },
+        twitter: { type: String, required: false },
+        linkedin: { type: String, required: false },
+        youtube: { type: String, required: false },
+        totalEmployee: { type: String, required: true },
+        revenue: { type: String, required: true },
+        industry: { type: String, required: true },
+        hqPhone: { type: String, required: false },
+        lineNumber: { type: String, required: true },
+        mobile: { type: String, required: true },
+        email: { type: String, required: true },
+        overview: { type: String, required: false },
+        image: { 
+            type: String, 
+            default: "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png"
         },
-        details: {
-            company_name: { type: String, required: true },
-            industry: { type: String, required: true },
-            total_employee: { type: Number, required: true },
-            estimate_revenue: { type: String, default: null },
-            location: { type: String, required: true },
-            hq_location: { type: String, default: null },
-            overview: { type: String, default: null },
-        },
-        management: {
-            open_contact: { type: String, default: null },
-            non_monger: { type: String, default: null },
-            monger: { type: String, default: null },
-            director_count: { type: Number, required: true },
-            c_level: { type: Boolean, required: true },
-        },
-        contact: {
-            instagram: { type: String, default: null },
-            facebook: { type: String, default: null },
-            twitter: { type: String, default: null },
-            linkedin_profile: { type: String, default: null },
-            youtube_channel: { type: String, default: null },
-        },
+        openContact: { type: String, required: false },
+        nonManager: { type: String, required: false },
+        manager: { type: String, required: false },
+        directorCount: { type: String, required: true },
+        cLevel: { type: String, required: true },
+        website: { type: String, required: true }
     },
-    {
-        timestamps: true
-    }
-
+    { timestamps: true }
 );
 
-// Create the Mongoose model for the IPeople interface
+// Create the model
 export const People = model<IPeople, PeopleModel>("People", PeopleSchema);

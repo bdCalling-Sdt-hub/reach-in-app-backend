@@ -34,7 +34,7 @@ const getAdminFromDB = async (): Promise<IUser[]> => {
 };
 
 const getUsersFromDB = async (query: Record<string, unknown>): Promise<IUser[]> => {
-  const { search, limit, page, status } = query;
+  const { search, limit, page, status, subscribe } = query;
 
   const anyConditions: any[] = [];
 
@@ -56,6 +56,12 @@ const getUsersFromDB = async (query: Record<string, unknown>): Promise<IUser[]> 
   if (status) {
     anyConditions.push({
       status: status
+    })
+  }
+  
+  if (subscribe) {
+    anyConditions.push({
+      isSubscribed: subscribe
     })
   }
 

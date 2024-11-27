@@ -51,7 +51,7 @@ const deleteContactToDB = async (id: string): Promise<IContact | null> => {
 
 const bulkContactDeleteToDB = async (ids: string[]): Promise<{}> => {
 
-    const allValid = ids.every(id => mongoose.Types.ObjectId.isValid(id));
+    const allValid = ids?.every(id => mongoose.Types.ObjectId.isValid(id));
     if (!allValid) {
         throw new ApiError(StatusCodes.BAD_REQUEST, "One or more IDs are invalid");
     }

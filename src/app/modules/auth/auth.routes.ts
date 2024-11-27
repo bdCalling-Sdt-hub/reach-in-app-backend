@@ -13,6 +13,11 @@ router.post(
 );
 
 router.post(
+    '/logout',
+    AuthController.logoutUser
+);
+
+router.post(
     '/forgot-password',
     validateRequest(AuthValidation.createForgetPasswordZodSchema),
     AuthController.forgetPassword

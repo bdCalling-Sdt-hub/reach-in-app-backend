@@ -25,6 +25,15 @@ const getCompanyFromDB = async(): Promise<ICompany[]>=>{
     return result;
 };
 
+const companyDetailsFromDB = async(id: string): Promise<ICompany | null>=>{
+
+    if(!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID");
+
+    const result = await Company.findById(id);
+
+    return result;
+};
+
 // update
 const updateBulkCompanyToDB = async(payload: {otherPayload: ICompany, ids: string[]} ): Promise<UpdateResult>=>{
 
@@ -50,7 +59,7 @@ const updateSingleCompanyToDB = async(id: string, payload:ICompany): Promise<ICo
     if(!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID");
 
 
-    const result = await Company.findById(
+    const result = await Company.findByIdAndUpdate(
         {_id: id},
         payload,
         {new: true}
@@ -96,5 +105,6 @@ export const CompanyService = {
     updateSingleCompanyToDB,
     updateBulkCompanyToDB,
     deleteSingleCompanyFromDB,
-    deleteBulkCompanyFromDB
+    deleteBulkCompanyFromDB,
+    companyDetailsFromDB
 }
