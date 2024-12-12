@@ -2,8 +2,11 @@ import { StatusCodes } from "http-status-codes";
 import ApiError from "../../../errors/ApiErrors";
 import { IPeople } from "./people.interface";
 import { People } from "./people.model";
-import mongoose from "mongoose";
+import mongoose, { FilterQuery } from "mongoose";
 import { DeleteResult, UpdateResult } from 'mongodb';
+import { JwtPayload } from "jsonwebtoken";
+import { User } from "../user/user.model";
+import { Subscription } from "../subscription/subscription.model";
 
 // create single people to database;
 const createPeopleToDB = async (payload: IPeople): Promise<IPeople> => {
@@ -23,14 +26,55 @@ const createBulkPeopleToDB = async (payload: IPeople[]): Promise<IPeople[]> => {
 // get peoples list from database
 const getPeopleFromDB = async (query: Record<string, unknown>): Promise<IPeople[]> => {
 
-    const { page, limit } = query;
+    const anyConditions: FilterQuery<IPeople>[] = [];
+
+    const { page, limit, accuracy_score, search, ...filterData } = query;
+
+    //service search here
+    if (search) {
+        anyConditions.push({
+            $or: [
+                "company_name", "first_name", "last_name", "city", "state",
+                "zip_code", "company_country", "company_city",
+                "company_state", "company_zip_Code"
+            ]
+                .map((field) => ({
+                    [field]: {
+                        $regex: search,
+                        $options: "i"
+                    }
+                }))
+        });
+    }
+
+    // Accuracy score range filtering
+    if (accuracy_score) {
+        const maxScore = parseFloat(accuracy_score as string);
+        if (!isNaN(maxScore)) {
+            anyConditions.push({
+                accuracy_score: { $gte: 0, $lte: maxScore }
+            });
+        }
+    }
+
+    // Additional filters for other fields
+    if (Object.keys(filterData).length) {
+        anyConditions.push({
+            $and: Object.entries(filterData).map(([field, value]) => ({
+                [field]: value
+            }))
+        });
+    }
+
+    // Apply filter conditions
+    const whereConditions = anyConditions.length > 0 ? { $and: anyConditions } : {};
 
     const pages = parseInt(page as string) || 1;
     const size = parseInt(limit as string) || 10;
     const skip = (pages - 1) * size;
 
-    const result = await People.find().skip(skip).limit(size).lean();
-    const total = await People.countDocuments();
+    const result = await People.find(whereConditions).skip(skip).limit(size).lean();
+    const total = await People.countDocuments(whereConditions);
 
     const data: any = {
         peoples: result,
@@ -42,11 +86,30 @@ const getPeopleFromDB = async (query: Record<string, unknown>): Promise<IPeople[
     return data;
 };
 
-const peopleDetailsFromDB = async(id: string): Promise<IPeople | null>=>{
+const peopleDetailsFromDB = async (user: JwtPayload, id: string): Promise<IPeople | null> => {
 
-    if(!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID");
+    if (!mongoose.Types.ObjectId.isValid(id)) throw new ApiError(StatusCodes.BAD_REQUEST, "Invalid ID");
+
+    const isExistUser = await User.findById(user.id).select("role isSubscribed").lean();
+
+    if (isExistUser?.role === "USER" && isExistUser.isSubscribed === false) {
+        throw new ApiError(StatusCodes.FORBIDDEN, "To get Access you need to subscribe a subscription");
+    }
+
+    const isExistSubscription:any = await Subscription.findOne({user: user.id}).lean();
+
+    if(isExistUser?.role === "USER" && isExistUser.isSubscribed === true && isExistSubscription?.remaining > 0){
+        await Subscription.findOneAndUpdate(
+            {user: user.id},
+            { $inc: { remaining: -1 } },
+            {new: true}
+        )
+    }
 
     const result = await People.findById(id);
+    if (!result) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Person not found.");
+    }
 
     return result;
 };

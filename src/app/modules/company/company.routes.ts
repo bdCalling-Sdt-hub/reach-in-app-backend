@@ -31,7 +31,6 @@ router.route("/:id")
     .patch(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         fileUploadHandler(),
-        validateRequest(CompanyValidation.updateCompanyZodSchema),
         CompanyController.updateSingleCompany
     );
 
@@ -69,7 +68,6 @@ router.route("/bulk")
     .patch(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         fileUploadHandler(),
-        validateRequest(CompanyValidation.updateCompanyZodSchema),
         CompanyController.updateBulkCompany
     );
 

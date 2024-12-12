@@ -2,11 +2,11 @@ import express, { Request, Response, NextFunction } from "express";
 import auth from "../../middlewares/auth";
 import { USER_ROLES } from "../../../enums/user";
 import fileUploadHandler from "../../middlewares/fileUploaderHandler";
-import { PeopleValidation } from "./people.validation";
-import validateRequest from "../../middlewares/validateRequest";
 import { PeopleController } from "./people.controller";
 import csv from "csvtojson";
 import { IPeople } from "./people.interface";
+import validateRequest from "../../middlewares/validateRequest";
+import { PeopleValidation } from "./people.validation";
 const router = express.Router();
 
 router.route("/")
@@ -23,10 +23,10 @@ router.route("/")
             req.body = {...payload, image};
             next();
         },
-        validateRequest(PeopleValidation.createPeopleZodSchema),
         PeopleController.createPeople
     )
     .get(
+        
         PeopleController.getPeople
     );
 
@@ -53,6 +53,7 @@ router.route("/bulk")
                 return res.status(500).json({ message: "An error occurred while processing the CSV file." });
             }
         },
+        validateRequest(PeopleValidation.createZodPeopleSchema),
         PeopleController.createBulkPeople
     )
     .delete(
@@ -63,7 +64,6 @@ router.route("/bulk")
     .patch(
         auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN),
         fileUploadHandler(),
-        validateRequest(PeopleValidation.updatePeopleZodSchema),
         PeopleController.updateBulkPeople
     );
 
@@ -74,6 +74,7 @@ router.route("/:id")
         PeopleController.deleteSinglePeople
     )
     .get(
+        auth(USER_ROLES.SUPER_ADMIN, USER_ROLES.SUPER_ADMIN, USER_ROLES.USER),
         PeopleController.peopleDetails
     )
     .patch(
@@ -87,12 +88,9 @@ router.route("/:id")
                 image = `/images/${req.files.image[0].filename}`;
             }
 
-            console.log(image)
-
             req.body = {...payload, image};
             next();
         },
-        validateRequest(PeopleValidation.updatePeopleZodSchema),
         PeopleController.updateSinglePeople
     );
 

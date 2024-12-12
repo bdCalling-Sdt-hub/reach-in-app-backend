@@ -16,7 +16,7 @@ const createCompany = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const createBulkCompany = catchAsync(async(req:Request, res: Response)=>{
-    const result = await CompanyService.createBulkCompanyToDB(req.body);
+    const result = await CompanyService.createBulkCompanyToDB(req.body.people);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
@@ -26,7 +26,7 @@ const createBulkCompany = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const getCompany = catchAsync(async(req:Request, res: Response)=>{
-    const result = await CompanyService.getCompanyFromDB();
+    const result = await CompanyService.getCompanyFromDB(req.query);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
@@ -36,7 +36,8 @@ const getCompany = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const companyDetails = catchAsync(async(req:Request, res: Response)=>{
-    const result = await CompanyService.companyDetailsFromDB(req.params.id);
+    const token = req.headers.authorization;
+    const result = await CompanyService.companyDetailsFromDB(token!, req.params.id);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,

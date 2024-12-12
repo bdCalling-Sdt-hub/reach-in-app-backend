@@ -1,87 +1,63 @@
 import { z } from "zod";
 
-// Define the Zod validation schema for IPeople with custom error messages
-const createPeopleZodSchema = z.object({
-    personal: z.object({
-        contact_name: z.string({ required_error: "Contact name is required" }),
-        title: z.string({ required_error: "Title is required" }),
-        address: z.string({ required_error: "Address is required" }),
-        email: z.string({ required_error: "Email is required" }).email("Invalid email address"),
-        hq_phone: z.string({ required_error: "HQ Phone is required" }),
-        line: z.string({ required_error: "Line is required" }),
-        mobile_number: z.string({ required_error: "Mobile Number is required" }),
-        website: z.string({ required_error: "Website is required" }).url("Invalid website URL"),
-    }),
-    details: z.object({
-        company_name: z.string({ required_error: "Company name is required" }),
-        industry: z.string({ required_error: "Industry is required" }),
-        total_employee: z.number({ required_error: "Total employee is required" })
-            .int("Total employee must be an integer")
-            .min(1, "Total employee must be a positive integer"),
-        estimate_revenue: z.string({ required_error: "Estimate Revenue is required" }),
-        location: z.string({ required_error: "Location is required" }),
-        hq_location: z.string({ required_error: "HQ Location is required" }),
-        overview: z.string({ required_error: "Overview is required" })
-    }),
-    management: z.object({
-        open_contact: z.string({ required_error: "Open Contact is required" }),
-        non_monger: z.string({ required_error: "Non Monger is required" }),
-        monger: z.string({ required_error: "Monger is required" }),
-        director_count: z.number({ required_error: "Director count is required" })
-            .int("Director count must be an integer")
-            .min(0, "Director count must be a non-negative integer"),
-        c_level: z.boolean({ required_error: "C-level status is required" }),
-    }),
-    contact: z.object({
-        instagram: z.string({ required_error: "Instagram Link is required" }).url("Invalid Instagram URL"),
-        facebook: z.string({ required_error: "Facebook Link is required" }).url("Invalid Facebook URL"),
-        twitter: z.string({ required_error: "Twitter Link is required" }).url("Invalid Twitter URL"),
-        linkedin_profile: z.string({ required_error: "Linkedin Link is required" }).url("Invalid LinkedIn URL"),
-        youtube_channel: z.string({ required_error: "Youtube Channel Link is required" }).url("Invalid YouTube URL")
+// Define the Zod schema for IPeople
+const createZodPeopleSchema = z.object({
+    body: z.object({
+        zoom_contact_info: z.string().optional(),
+        company_name: z.string({required_error: "Company Name Required"} ),
+        first_name: z.string({required_error: "First Name"}),
+        last_name: z.string({required_error: "last Name"}),
+        salutation: z.string().optional(),
+        suffix: z.string().optional(),
+        middle_name: z.string().optional(),
+        title: z.string().optional(),
+        email: z.string({required_error: "Email is required"}).email(),
+        function: z.string().optional(),
+        seniority: z.string().optional(),
+        phone: z.string({required_error: "Phone Number is Required"}),
+        mobile: z.string().optional(),
+        hq_phone: z.string().optional(),
+        linkedin: z.string().url().optional(),
+        country: z.string({required_error: "Country is required"}),
+        city: z.string({required_error: "City is required"}),
+        state: z.string({required_error: "State is Required"}),
+        zip_code: z.string({required_error: "Zip Code is Required"}), // check yet 
+        zoom_company_id: z.string().optional(),
+        attribute1: z.string().optional(),
+        attribute2: z.string().optional(),
+        supplement_email: z.string().email().optional(),
+        industry: z.string().optional(),
+        sub_industry: z.string().optional(),
+        employee_count: z.string().optional(),
+        source: z.string().optional(),
+        accuracy_score: z
+            .union([z.number(), z.string().transform((val) => parseFloat(val))])
+            .optional(),
+        zoom_info_contact: z.string().optional(),
+        website: z.string().url().optional(),
+        revenue: z.string().optional(),
+        revenue_range: z.string().optional(),
+        zoom_info_company_profile: z.string().optional(),
+        company_linkedin: z.string().url().optional(),
+        company_facebook: z.string().url().optional(),
+        company_twitter: z.string().url().optional(),
+        ownership: z.string().optional(),
+        business_model: z.string().optional(),
+        company_country: z.string().optional(),
+        company_city: z.string().optional(),
+        company_state: z.string().optional(),
+        company_zip_Code: z.string().optional(),
+        image: z.string().url().optional(),
+        hq_location: z.string().optional(),
+        company_overview: z.string().optional(),
+        open_contact: z.string().optional(),
+        non_manager: z.string().optional(),
+        manager: z.string().optional(),
+        director: z.string().optional(),
+        c_level: z.string().optional()
     })
 });
 
-
-const updatePeopleZodSchema = z.object({
-    personal: z.object({
-        contact_name: z.string().optional(),
-        title: z.string().optional(),
-        address: z.string().optional(),
-        email: z.string().email("Invalid email address").optional(),
-        hq_phone: z.string().optional(),
-        line: z.string().optional(),
-        mobile_number: z.string().optional(),
-        website: z.string().url("Invalid website URL").optional(),
-    }).optional(),
-    details: z.object({
-        company_name: z.string().optional(),
-        industry: z.string().optional(),
-        total_employee: z.number().int("Total employee must be an integer")
-            .min(1, "Total employee must be a positive integer").optional(),
-        estimate_revenue: z.string().optional(),
-        location: z.string().optional(),
-        hq_location: z.string().optional(),
-        overview: z.string().optional()
-    }).optional(),
-    management: z.object({
-        open_contact: z.string().optional(),
-        non_monger: z.string().optional(),
-        monger: z.string().optional(),
-        director_count: z.number().int("Director count must be an integer")
-            .min(0, "Director count must be a non-negative integer").optional(),
-        c_level: z.boolean().optional(),
-    }).optional(),
-    contact: z.object({
-        instagram: z.string().url("Invalid Instagram URL").optional(),
-        facebook: z.string().url("Invalid Facebook URL").optional(),
-        twitter: z.string().url("Invalid Twitter URL").optional(),
-        linkedin_profile: z.string().url("Invalid LinkedIn URL").optional(),
-        youtube_channel: z.string().url("Invalid YouTube URL").optional()
-    }).optional()
-});
-
-
-export const PeopleValidation = { 
-    createPeopleZodSchema,
-    updatePeopleZodSchema 
-};
+export const PeopleValidation = {
+    createZodPeopleSchema
+}

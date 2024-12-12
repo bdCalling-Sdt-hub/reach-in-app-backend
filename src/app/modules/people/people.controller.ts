@@ -36,7 +36,7 @@ const getPeople = catchAsync(async(req:Request, res: Response)=>{
 });
 
 const peopleDetails = catchAsync(async(req:Request, res: Response)=>{
-    const result = await PeopleService.peopleDetailsFromDB(req.params.id);
+    const result = await PeopleService.peopleDetailsFromDB(req.user, req.params.id);
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
