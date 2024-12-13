@@ -4,9 +4,11 @@ import { ICompany } from "./company.interface";
 import { Company } from "./company.model";
 import mongoose, { FilterQuery } from "mongoose";
 import { DeleteResult, UpdateResult } from 'mongodb';
-import { ResetToken } from "../resetToken/resetToken.model";
-import { User } from "../user/user.model";
 import { Subscription } from "../subscription/subscription.model";
+import { Secret } from 'jsonwebtoken';
+import { jwtHelper } from "../../../helpers/jwtHelper";
+import config from "../../../config";
+
 
 // create single people to database;
 const createCompanyToDB = async (payload: ICompany): Promise<ICompany> => {
@@ -88,14 +90,23 @@ const companyDetailsFromDB = async (token: string | null, id: string): Promise<I
     let isExistSubscription = null;
 
     if (token) {
-        // Token exists, validate it
-        const isExistToken = await ResetToken.isExistToken(token);
-        if (!isExistToken) {
+        const verifyUser = jwtHelper.verifyToken(
+            token,
+            config.jwt.jwt_secret as Secret
+        );
+
+        if (!verifyUser) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, "Invalid or expired token");
+        }else{
+            await Subscription.findOneAndUpdate(
+                {user: verifyUser.id},
+                { $inc: { remaining: -1 } },
+                {new: true}
+            )
         }
 
         // Check subscription status
-        isExistSubscription = await Subscription.exists({ user: isExistToken.user });
+        isExistSubscription = await Subscription.exists({ user: verifyUser.id });
         if (!isExistSubscription) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, "You are not authorized");
         }
