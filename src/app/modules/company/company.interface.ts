@@ -47,6 +47,10 @@ export type ICompany = {
     corporate_hoovers_contacts?: string;
     corporate_direct_marketing_status?: string;
     image?: string;
+    total_non_manager?: number;
+    total_manager?: number;
+    total_c_level?: number;
+    total_open_contact?: number;
 }
 
 // Define the CompanyModel type with generics for a cleaner Mongoose model definition

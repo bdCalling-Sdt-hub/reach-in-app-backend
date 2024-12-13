@@ -48,6 +48,10 @@ const createCompanyZodSchema = z.object({
         corporate_duns_number: z.string().optional(),
         corporate_hoovers_contacts: z.string().optional(),
         corporate_direct_marketing_status: z.string().optional(),
+        total_non_manager: z.number().optional(),
+        total_manager: z.number().optional(),
+        total_c_level: z.number().optional(),
+        total_open_contact: z.number().optional(),
     })
 });
 

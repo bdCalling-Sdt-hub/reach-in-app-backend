@@ -53,6 +53,18 @@ const CompanySchema = new Schema<ICompany, CompanyModel>(
             type: String,
             default: "https://png.pngtree.com/png-vector/20220709/ourmid/pngtree-businessman-user-avatar-wearing-suit-with-red-tie-png-image_5809521.png",
         },
+        total_non_manager:{
+            type: Number
+        },
+        total_manager:{
+            type: Number
+        },
+        total_c_level:{
+            type: Number
+        },
+        total_open_contact:{
+            type: Number
+        }
     },
     {
         timestamps: true
