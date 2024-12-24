@@ -11,6 +11,8 @@ const auth = (...roles: string[]) => async (req: Request, res: Response, next: N
         if (!tokenWithBearer) {
             throw new ApiError(StatusCodes.UNAUTHORIZED, 'You are not authorized');
         }
+
+        
   
         if (tokenWithBearer && tokenWithBearer.startsWith('Bearer')) {
             const token = tokenWithBearer.split(' ')[1];
@@ -20,6 +22,8 @@ const auth = (...roles: string[]) => async (req: Request, res: Response, next: N
                 token,
                 config.jwt.jwt_secret as Secret
             );
+
+
 
             //set user to header
             req.user = verifyUser;
