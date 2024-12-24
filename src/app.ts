@@ -20,7 +20,7 @@ app.use(
 
 //body parser
 app.use(cors({
-    origin: ["http://192.168.10.19:3003", "http://192.168.10.102:3003", "http://192.168.10.19:3001"],
+    origin: ["http://192.168.10.19:3003", "http://178.16.138.188:3000", "http://178.16.138.188:4173", "http://192.168.10.102:3003", "http://192.168.10.19:3001"],
     credentials: true
 }));
 app.use(cookieParser());
