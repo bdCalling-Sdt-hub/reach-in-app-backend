@@ -13,6 +13,7 @@ router.route("/")
         fileUploadHandler(),
         (req: Request, res: Response, next: NextFunction) => {
             const payload = req.body;
+            console.log(req.files)
             let image;
             if (req.files && 'image' in req.files && req.files.image[0]) {
                 image = `/images/${req.files.image[0].filename}`;

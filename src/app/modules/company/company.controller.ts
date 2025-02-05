@@ -3,6 +3,7 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { StatusCodes } from "http-status-codes";
 import { CompanyService } from "./company.service";
+import { insertVisitorInDB } from "../../../DB";
 
 
 const createCompany = catchAsync(async(req:Request, res: Response)=>{
@@ -27,6 +28,8 @@ const createBulkCompany = catchAsync(async(req:Request, res: Response)=>{
 
 const getCompany = catchAsync(async(req:Request, res: Response)=>{
     const result = await CompanyService.getCompanyFromDB(req.query);
+    const remoteAddress = req.ip || req.connection.remoteAddress;
+    insertVisitorInDB(remoteAddress as string)
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
